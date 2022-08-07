@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☀️</text></svg>"
+    />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="src/style.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <section class="header">
+        <h1 class="city-name" id="header-city"></h1>
+        <h3 class="current-date-time">
+          <span id="current-weekday"></span> |
+          <span id="current-month"></span>
+          <span id="current-date"></span> |
+          <span id="current-hour"></span>:<span id="current-minutes"></span>
+          <span id="timestamp"></span>
+        </h3>
+        <div class="current-temp-container">
+          <div class="row">
+            <div class="col-2">
+              <h5 class="current-temp" id="current-temp"></h5>
+            </div>
+            <div class="col-2">
+              <h5>
+                <a href="#" class="fahrenheit" id="fahrenheit-link">℉</a>
+                <a href="#" class="celsius" id="celsius-link">℃</a>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="current-weather">
+        <div class="row">
+          <div class="col-6">
+            <img src="images/sun.png" alt="sun" class="current-weather-image" />
+          </div>
+          <div class="col-6">
+            <ul class="weather-details">
+              <li class="feels-like-temp">
+                feels like: <span id="feels-like-temp"></span>℉
+              </li>
+              <li class="humidity">humidity: <span id="humidity"></span>%</li>
+              <li class="wind">wind: <span id="wind"></span> mph</li>
+              <li
+                class="current-weather-condition"
+                id="current-weather-condition"
+              >
+                sunny
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="search-current-city">
+        <form class="form" id="search-form">
+          <div class="row">
+            <div class="col-8">
+              <input
+                type="search"
+                class="search-input form-control"
+                id="city-search"
+                placeholder="Search for a city..."
+              />
+            </div>
+            <div class="col-4">
+              <input type="submit" class="search form-control" value="Search" />
+            </div>
+          </div>
+        </form>
+        <button type="submit" class="current-city" id="current-city-button">
+          📍 Current Location
+        </button>
+      </section>
+      <hr />
+      <section class="forecast">
+        <div class="row">
+          <div class="col card-column">
+            <h5 class="card-title">Thursday</h5>
+            <div class="card">
+              <span class="forecast-temp-max">73°</span>
+              <span class="forecast-temp-min">55°</span>
+              <img
+                src="images/cloudy.png"
+                alt="cloudy"
+                class="forecast-weather-image"
+              />
+            </div>
+          </div>
+          <div class="col card-column">
+            <h5 class="card-title">Friday</h5>
+            <div class="card">
+              <span class="forecast-temp-max">68°</span>
+              <span class="forecast-temp-min">58°</span>
+              <img
+                src="images/partly-cloudy.png"
+                alt="partly cloudy"
+                class="forecast-weather-image"
+              />
+            </div>
+          </div>
+          <div class="col card-column">
+            <h5 class="card-title">Saturday</h5>
+            <div class="card">
+              <span class="forecast-temp-max">75°</span>
+              <span class="forecast-temp-min">54°</span>
+              <img
+                src="images/sun.png"
+                alt="sunny"
+                class="forecast-weather-image"
+              />
+            </div>
+          </div>
+          <div class="col card-column">
+            <h5 class="card-title">Sunday</h5>
+            <div class="card">
+              <span class="forecast-temp-max">87°</span>
+              <span class="forecast-temp-min">60°</span>
+              <img
+                src="images/rain.png"
+                alt="rain"
+                class="forecast-weather-image"
+              />
+            </div>
+          </div>
+          <div class="col card-column">
+            <h5 class="card-title">Monday</h5>
+            <div class="card">
+              <span class="forecast-temp-max">88°</span>
+              <span class="forecast-temp-min">62°</span>
+              <img
+                src="images/partly-cloudy-rain.png"
+                alt="partly cloudy & rain"
+                class="forecast-weather-image"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <section class="footer">open source code by jess gascoigne</section>
+    <script src="src/script.js"></script>
+  </body>
+</html>
