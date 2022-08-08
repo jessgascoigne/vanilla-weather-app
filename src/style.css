@@ -176,3 +176,15 @@ hr {
   padding-top: 15px;
   text-align: center;
 }
+
+.github-repo-link {
+  color: #1f91a8;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 200ms ease-in-out;
+}
+
+.github-repo-link:hover {
+  color: #1f91a8;
+  font-weight: 300;
+}
