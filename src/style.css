@@ -46,24 +46,25 @@
   text-decoration: none;
   transition: all 150ms ease-in-out;
 }
-.fahrenheit {
+.active-link {
   color: #000;
   font-size: 22px;
   font-weight: 600;
   top: 20px;
-  left: 80px;
+  left: 95px;
 }
-.fahrenheit:hover {
+.active-link:hover {
   color: #000;
+  cursor: default;
 }
-.celsius {
+.non-active-link {
   color: #848282;
   font-size: 18px;
   font-weight: 300;
   top: 20px;
-  left: 80px;
+  left: 95px;
 }
-.celsius:hover {
+.non-active-link:hover {
   color: #000;
   font-size: 22px;
 }
