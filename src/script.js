@@ -126,7 +126,7 @@ function displayCelsius(event) {
   let currentCelsiusTemp = ((currentFahrenheitTemp - 32) * 5) / 9;
   let feelsLikeCelsiusTemp = ((currentFeelsLikeTemp - 32) * 5) / 9;
   currentTempHeading.innerHTML = Math.round(currentCelsiusTemp);
-  feelsLikeTempHeading.innerHTML = `${Math.round(feelsLikeCelsiusTemp)}℃;
+  feelsLikeTempHeading.innerHTML = `${Math.round(feelsLikeCelsiusTemp)}℃`;
 }
 
 function displayFahrenheitTemp(event) {
