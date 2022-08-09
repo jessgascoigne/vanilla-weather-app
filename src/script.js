@@ -106,8 +106,9 @@ function displayWeather(response) {
 
   currentFeelsLikeTemp = response.data.main.feels_like;
 
-  document.querySelector("#feels-like-temp").innerHTML =
-    Math.round(currentFeelsLikeTemp);
+  document.querySelector("#feels-like-temp").innerHTML = `${Math.round(
+    currentFeelsLikeTemp
+  )}℉`;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#wind").innerHTML = Math.round(
     response.data.wind.speed
@@ -122,12 +123,10 @@ function displayCelsius(event) {
   celsiusLink.classList.remove("non-active-link");
   fahrenheitLink.classList.remove("active-link");
   fahrenheitLink.classList.add("non-active-link");
-  let currentTempHeading = document.querySelector("#current-temp");
   let currentCelsiusTemp = ((currentFahrenheitTemp - 32) * 5) / 9;
-  let feelsLikeTempHeading = document.querySelector("#feels-like-temp");
   let feelsLikeCelsiusTemp = ((currentFeelsLikeTemp - 32) * 5) / 9;
   currentTempHeading.innerHTML = Math.round(currentCelsiusTemp);
-  feelsLikeTempHeading.innerHTML = Math.round(feelsLikeCelsiusTemp);
+  feelsLikeTempHeading.innerHTML = `${Math.round(feelsLikeCelsiusTemp)}℃;
 }
 
 function displayFahrenheitTemp(event) {
@@ -136,15 +135,14 @@ function displayFahrenheitTemp(event) {
   celsiusLink.classList.add("non-active-link");
   fahrenheitLink.classList.add("active-link");
   fahrenheitLink.classList.remove("non-active-link");
-  let currentTempHeading = document.querySelector("#current-temp");
-  let feelsLikeTempHeading = document.querySelector("#feels-like-temp");
   currentTempHeading.innerHTML = Math.round(currentFahrenheitTemp);
-  feelsLikeTempHeading.innerHTML = Math.round(currentFeelsLikeTemp);
+  feelsLikeTempHeading.innerHTML = `${Math.round(currentFeelsLikeTemp)}℉`;
 }
 
 let currentFahrenheitTemp = null;
-
 let currentFeelsLikeTemp = null;
+let currentTempHeading = document.querySelector("#current-temp");
+let feelsLikeTempHeading = document.querySelector("#feels-like-temp");
 
 let currentLocationButton = document.querySelector("#current-city-button");
 currentLocationButton.addEventListener("click", getCurrentPosition);
