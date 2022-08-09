@@ -93,6 +93,7 @@ function searchCity(location) {
 }
 
 function displayWeather(response) {
+  console.log(response.data);
   document.querySelector("#header-city").innerHTML = response.data.name;
 
   currentFahrenheitTemp = response.data.main.temp;
@@ -100,6 +101,9 @@ function displayWeather(response) {
   document.querySelector("#current-temp").innerHTML = Math.round(
     currentFahrenheitTemp
   );
+  document
+    .querySelector("#current-weather-icon")
+    .setAttribute("src", `images/${response.data.weather[0].icon}.png`);
   document.querySelector("#feels-like-temp").innerHTML = Math.round(
     response.data.main.feels_like
   );
@@ -108,7 +112,7 @@ function displayWeather(response) {
     response.data.wind.speed
   );
   document.querySelector("#current-weather-condition").innerHTML =
-    response.data.weather[0].main;
+    response.data.weather[0].description;
 }
 
 function displayCelsius(event) {
