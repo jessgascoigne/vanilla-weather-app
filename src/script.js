@@ -68,28 +68,35 @@ function replaceHeaderMinutes() {
 }
 replaceHeaderMinutes();
 
-function handleSubmit(event) {
-  event.preventDefault();
-  let citySearchInput = `q=${document.querySelector("#city-search").value}`;
-  searchCity(citySearchInput);
+function displayForecast(response) {
+  let forecastSection = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+  weekDays.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col card-column">
+      <h5 class="card-title">${day}</h5>
+      <div class="card">
+        <span class="forecast-temp-max">73°</span>
+        <span class="forecast-temp-min">55°</span>
+        <img
+          src="images/02d.png"
+          alt="cloudy"
+          class="forecast-weather-image"
+        />
+      </div>
+    </div>`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastSection.innerHTML = forecastHTML;
 }
 
-function getCurrentPosition(event) {
-  event.preventDefault();
-  navigator.geolocation.getCurrentPosition(searchCurrentLocation);
-}
-
-function searchCurrentLocation(position) {
-  let currentCoords = `lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
-  searchCity(currentCoords);
-}
-
-function searchCity(location) {
-  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
-  let apiKey = "6e2f14a60b2f5be57b160a6148235b2f";
-  let units = "imperial";
-  let apiUrl = `${apiEndpoint}${location}&appid=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(displayWeather);
+function getForecast(response) {
+  let apiEndpoint = `https://api.openweathermap.org/data/2.5/onecall?`;
+  let apiUrl = `${apiEndpoint}lat=${response.lat}&lon=${response.lon}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(displayForecast);
+  console.log(apiUrl);
 }
 
 function displayWeather(response) {
@@ -113,6 +120,8 @@ function displayWeather(response) {
   );
   document.querySelector("#current-weather-condition").innerHTML =
     response.data.weather[0].description;
+
+  getForecast(response.data.coord);
 }
 
 function displayCelsius(event) {
@@ -137,32 +146,34 @@ function displayFahrenheit(event) {
   feelsLikeTempHeading.innerHTML = `${Math.round(currentFeelsLikeTemp)}℉`;
 }
 
-function displayForecast() {
-  let forecastSection = document.querySelector("#forecast");
-  let forecastHTML = `<div class="row">`;
-  weekDays.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col card-column">
-    <h5 class="card-title">${day}</h5>
-    <div class="card">
-      <span class="forecast-temp-max">73°</span>
-      <span class="forecast-temp-min">55°</span>
-      <img
-        src="images/02d.png"
-        alt="cloudy"
-        class="forecast-weather-image"
-      />
-    </div>
-  </div>`;
-  });
-
-  forecastHTML = forecastHTML + `</div>`;
-  forecastSection.innerHTML = forecastHTML;
+function searchCity(location) {
+  let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
+  let apiUrl = `${apiEndpoint}${location}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(displayWeather);
 }
+
+function handleSubmit(event) {
+  event.preventDefault();
+  let citySearchInput = `q=${document.querySelector("#city-search").value}`;
+  searchCity(citySearchInput);
+}
+
+function getCurrentPosition(event) {
+  event.preventDefault();
+  navigator.geolocation.getCurrentPosition(searchCurrentLocation);
+}
+
+function searchCurrentLocation(position) {
+  let currentCoords = `lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
+  searchCity(currentCoords);
+}
+
+let apiKey = "6e2f14a60b2f5be57b160a6148235b2f";
+let units = "imperial";
 
 let currentFahrenheitTemp = null;
 let currentFeelsLikeTemp = null;
+
 let currentTempHeading = document.querySelector("#current-temp");
 let feelsLikeTempHeading = document.querySelector("#feels-like-temp");
 
