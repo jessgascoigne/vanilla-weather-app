@@ -96,19 +96,17 @@ function displayWeather(response) {
   document.querySelector("#header-city").innerHTML = response.data.name;
 
   currentFahrenheitTemp = response.data.main.temp;
+  currentFeelsLikeTemp = response.data.main.feels_like;
 
-  document.querySelector("#current-temp").innerHTML = Math.round(
-    currentFahrenheitTemp
-  );
+  if (celsiusLink.classList.contains("active-link")) {
+    displayCelsius();
+  } else {
+    displayFahrenheit();
+  }
   document
     .querySelector("#current-weather-icon")
     .setAttribute("src", `images/${response.data.weather[0].icon}.png`);
 
-  currentFeelsLikeTemp = response.data.main.feels_like;
-
-  document.querySelector("#feels-like-temp").innerHTML = `${Math.round(
-    currentFeelsLikeTemp
-  )}℉`;
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#wind").innerHTML = Math.round(
     response.data.wind.speed
@@ -118,23 +116,23 @@ function displayWeather(response) {
 }
 
 function displayCelsius(event) {
-  event.preventDefault();
-  celsiusLink.classList.add("active-link");
-  celsiusLink.classList.remove("non-active-link");
-  fahrenheitLink.classList.remove("active-link");
-  fahrenheitLink.classList.add("non-active-link");
+  if (event !== undefined) {
+    event.preventDefault();
+  }
+  celsiusLink.classList.replace("non-active-link", "active-link");
+  fahrenheitLink.classList.replace("active-link", "non-active-link");
   let currentCelsiusTemp = ((currentFahrenheitTemp - 32) * 5) / 9;
   let feelsLikeCelsiusTemp = ((currentFeelsLikeTemp - 32) * 5) / 9;
   currentTempHeading.innerHTML = Math.round(currentCelsiusTemp);
   feelsLikeTempHeading.innerHTML = `${Math.round(feelsLikeCelsiusTemp)}℃`;
 }
 
-function displayFahrenheitTemp(event) {
-  event.preventDefault();
-  celsiusLink.classList.remove("active-link");
-  celsiusLink.classList.add("non-active-link");
-  fahrenheitLink.classList.add("active-link");
-  fahrenheitLink.classList.remove("non-active-link");
+function displayFahrenheit(event) {
+  if (event !== undefined) {
+    event.preventDefault();
+  }
+  fahrenheitLink.classList.replace("non-active-link", "active-link");
+  celsiusLink.classList.replace("active-link", "non-active-link");
   currentTempHeading.innerHTML = Math.round(currentFahrenheitTemp);
   feelsLikeTempHeading.innerHTML = `${Math.round(currentFeelsLikeTemp)}℉`;
 }
@@ -178,7 +176,7 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsius);
 
 let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
+fahrenheitLink.addEventListener("click", displayFahrenheit);
 
 searchCity("q=seattle");
 displayForecast();
