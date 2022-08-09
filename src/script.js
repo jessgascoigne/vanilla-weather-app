@@ -139,6 +139,30 @@ function displayFahrenheitTemp(event) {
   feelsLikeTempHeading.innerHTML = `${Math.round(currentFeelsLikeTemp)}℉`;
 }
 
+function displayForecast() {
+  let forecastSection = document.querySelector("#forecast");
+  let forecastHTML = `<div class="row">`;
+  weekDays.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col card-column">
+    <h5 class="card-title">${day}</h5>
+    <div class="card">
+      <span class="forecast-temp-max">73°</span>
+      <span class="forecast-temp-min">55°</span>
+      <img
+        src="images/02d.png"
+        alt="cloudy"
+        class="forecast-weather-image"
+      />
+    </div>
+  </div>`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastSection.innerHTML = forecastHTML;
+}
+
 let currentFahrenheitTemp = null;
 let currentFeelsLikeTemp = null;
 let currentTempHeading = document.querySelector("#current-temp");
@@ -157,3 +181,4 @@ let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
 
 searchCity("q=seattle");
+displayForecast();
