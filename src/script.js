@@ -68,35 +68,49 @@ function replaceHeaderMinutes() {
 }
 replaceHeaderMinutes();
 
+function formatForecastDate(forecastTimestamp) {
+  let date = new Date(forecastTimestamp * 1000);
+  let forecastDay = date.getDay();
+  return weekDays[forecastDay];
+}
+
 function displayForecast(response) {
   let forecastSection = document.querySelector("#forecast");
+  let forecast = response.data.daily;
   let forecastHTML = `<div class="row">`;
-  weekDays.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col card-column">
-      <h5 class="card-title">${day}</h5>
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 5) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="col card-column">
+      <h5 class="card-title" id="forecast-day">${formatForecastDate(
+        forecastDay.dt
+      )}</h5>
       <div class="card">
-        <span class="forecast-temp-max">73°</span>
-        <span class="forecast-temp-min">55°</span>
+        <span class="forecast-temp-max" id="forecast-temp-max">${Math.round(
+          forecastDay.temp.max
+        )}°</span>
+        <span class="forecast-temp-min" id="forecast-temp-min">${Math.round(
+          forecastDay.temp.min
+        )}°</span>
         <img
-          src="images/02d.png"
-          alt="cloudy"
+          src="images/${forecastDay.weather[0].icon}.png"
+          alt="forecast icon"
           class="forecast-weather-image"
         />
       </div>
     </div>`;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
   forecastSection.innerHTML = forecastHTML;
 }
 
-function getForecast(response) {
+function getForecast(coordinates) {
   let apiEndpoint = `https://api.openweathermap.org/data/2.5/onecall?`;
-  let apiUrl = `${apiEndpoint}lat=${response.lat}&lon=${response.lon}&appid=${apiKey}&units=${units}`;
+  let apiUrl = `${apiEndpoint}lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayForecast);
-  console.log(apiUrl);
 }
 
 function displayWeather(response) {
@@ -190,4 +204,3 @@ let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", displayFahrenheit);
 
 searchCity("q=seattle");
-displayForecast();
