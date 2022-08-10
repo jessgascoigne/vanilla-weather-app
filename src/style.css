@@ -42,16 +42,16 @@
 .fahrenheit,
 .celsius {
   cursor: pointer;
+  left: 95px;
   position: relative;
   text-decoration: none;
+  top: 20px;
   transition: all 150ms ease-in-out;
 }
 .active-link {
   color: #000;
   font-size: 22px;
   font-weight: 600;
-  top: 20px;
-  left: 95px;
 }
 .active-link:hover {
   color: #000;
@@ -61,8 +61,6 @@
   color: #848282;
   font-size: 18px;
   font-weight: 300;
-  top: 20px;
-  left: 95px;
 }
 .non-active-link:hover {
   color: #000;
