@@ -118,6 +118,7 @@ function displayWeather(response) {
 
   currentFahrenheitTemp = response.data.main.temp;
   currentFeelsLikeTemp = response.data.main.feels_like;
+  wind = response.data.wind.speed;
 
   if (celsiusLink.classList.contains("active-link")) {
     displayCelsius();
@@ -129,9 +130,6 @@ function displayWeather(response) {
     .setAttribute("src", `images/${response.data.weather[0].icon}.png`);
 
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
-  document.querySelector("#wind").innerHTML = Math.round(
-    response.data.wind.speed
-  );
   document.querySelector("#current-weather-condition").innerHTML =
     response.data.weather[0].description;
 
@@ -146,8 +144,10 @@ function displayCelsius(event) {
   fahrenheitLink.classList.replace("active-link", "non-active-link");
   let currentCelsiusTemp = ((currentFahrenheitTemp - 32) * 5) / 9;
   let feelsLikeCelsiusTemp = ((currentFeelsLikeTemp - 32) * 5) / 9;
+  let kmhWind = wind * 1.609344;
   currentTempHeading.innerHTML = Math.round(currentCelsiusTemp);
   feelsLikeTempHeading.innerHTML = `${Math.round(feelsLikeCelsiusTemp)}℃`;
+  windHeading.innerHTML = `${Math.round(kmhWind)} km/h`;
 }
 
 function displayFahrenheit(event) {
@@ -158,12 +158,14 @@ function displayFahrenheit(event) {
   celsiusLink.classList.replace("active-link", "non-active-link");
   currentTempHeading.innerHTML = Math.round(currentFahrenheitTemp);
   feelsLikeTempHeading.innerHTML = `${Math.round(currentFeelsLikeTemp)}℉`;
+  windHeading.innerHTML = `${Math.round(wind)} mph`;
 }
 
 function searchCity(location) {
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
   let apiUrl = `${apiEndpoint}${location}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayWeather);
+  console.log(apiUrl);
 }
 
 function handleSubmit(event) {
@@ -187,9 +189,11 @@ let units = "imperial";
 
 let currentFahrenheitTemp = null;
 let currentFeelsLikeTemp = null;
+let wind = null;
 
 let currentTempHeading = document.querySelector("#current-temp");
 let feelsLikeTempHeading = document.querySelector("#feels-like-temp");
+let windHeading = document.querySelector("#wind");
 
 let currentLocationButton = document.querySelector("#current-city-button");
 currentLocationButton.addEventListener("click", getCurrentPosition);
