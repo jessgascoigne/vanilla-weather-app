@@ -76,7 +76,10 @@ function formatForecastDate(forecastTimestamp) {
 
 function displayForecast(response) {
   let forecastSection = document.querySelector("#forecast");
-  let forecast = response.data.daily;
+  if (response !== undefined) {
+    forecast = response.data.daily;
+  }
+  if (!forecast) return;
   let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index) {
     if (index < 5) {
@@ -87,12 +90,16 @@ function displayForecast(response) {
         forecastDay.dt
       )}</h5>
       <div class="card">
-        <span class="forecast-temp-max" id="forecast-temp-max">${Math.round(
-          forecastDay.temp.max
-        )}°</span>
-        <span class="forecast-temp-min" id="forecast-temp-min">${Math.round(
-          forecastDay.temp.min
-        )}°</span>
+        <span class="forecast-temp-max" id="forecast-temp-max">${
+          celsiusLink.classList.contains("active-link")
+            ? Math.round(((forecastDay.temp.max - 32) * 5) / 9)
+            : Math.round(forecastDay.temp.max)
+        }°</span>
+        <span class="forecast-temp-min" id="forecast-temp-min">${
+          celsiusLink.classList.contains("active-link")
+            ? Math.round(((forecastDay.temp.min - 32) * 5) / 9)
+            : Math.round(forecastDay.temp.min)
+        }°</span>
         <img
           src="images/${forecastDay.weather[0].icon}.png"
           alt="forecast icon"
@@ -132,7 +139,6 @@ function displayWeather(response) {
   document.querySelector("#humidity").innerHTML = response.data.main.humidity;
   document.querySelector("#current-weather-condition").innerHTML =
     response.data.weather[0].description;
-
   getForecast(response.data.coord);
 }
 
@@ -148,6 +154,7 @@ function displayCelsius(event) {
   currentTempHeading.innerHTML = Math.round(currentCelsiusTemp);
   feelsLikeTempHeading.innerHTML = `${Math.round(feelsLikeCelsiusTemp)}℃`;
   windHeading.innerHTML = `${Math.round(kmhWind)} km/h`;
+  displayForecast();
 }
 
 function displayFahrenheit(event) {
@@ -159,13 +166,13 @@ function displayFahrenheit(event) {
   currentTempHeading.innerHTML = Math.round(currentFahrenheitTemp);
   feelsLikeTempHeading.innerHTML = `${Math.round(currentFeelsLikeTemp)}℉`;
   windHeading.innerHTML = `${Math.round(wind)} mph`;
+  displayForecast();
 }
 
 function searchCity(location) {
   let apiEndpoint = "https://api.openweathermap.org/data/2.5/weather?";
   let apiUrl = `${apiEndpoint}${location}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayWeather);
-  console.log(apiUrl);
 }
 
 function handleSubmit(event) {
@@ -190,6 +197,7 @@ let units = "imperial";
 let currentFahrenheitTemp = null;
 let currentFeelsLikeTemp = null;
 let wind = null;
+let forecast = null;
 
 let currentTempHeading = document.querySelector("#current-temp");
 let feelsLikeTempHeading = document.querySelector("#feels-like-temp");
