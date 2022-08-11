@@ -34,20 +34,29 @@
   max-height: 150px;
   padding-bottom: 15px;
 }
+.temp-column {
+  width: 70%;
+}
 .current-temp {
   color: #2a2a2a;
-  font-size: 100px;
+  display: block;
+  font-size: 90px;
   font-weight: 500;
+  margin: 0 auto;
+}
+.units-column {
+  width: 30%;
 }
 .fahrenheit,
 .celsius {
   cursor: pointer;
-  left: 95px;
+  left: -23px;
   position: relative;
   text-decoration: none;
   top: 20px;
   transition: all 150ms ease-in-out;
 }
+
 .active-link {
   color: #000;
   font-size: 22px;
