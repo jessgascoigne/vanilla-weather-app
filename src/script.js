@@ -179,6 +179,7 @@ function handleSubmit(event) {
   event.preventDefault();
   let citySearchInput = `q=${document.querySelector("#city-search").value}`;
   searchCity(citySearchInput);
+  document.querySelector("#search-form").reset();
 }
 
 function getCurrentPosition(event) {
